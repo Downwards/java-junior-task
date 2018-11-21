@@ -1,43 +1,28 @@
 package com.mcb.javajuniortask.model;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import javax.persistence.OneToMany;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Data
-public class Debt {
+public class Payment {
 
   @Id
   private UUID id;
   private BigDecimal value;
 
   @ManyToOne
+  @JoinColumn(name = "dept_id")
+  private Debt debt;
+
+  @ManyToOne
   @JoinColumn(name = "client_id")
   private Client client;
-
-  @OneToMany(mappedBy = "debt")
-  @Cascade(CascadeType.ALL)
-  private List<Payment> payments = new LinkedList<>();
-
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
 
   public BigDecimal getValue() {
     return value;
@@ -47,12 +32,19 @@ public class Debt {
     this.value = value;
   }
 
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public void setDebt(Debt debt) {
+    this.debt = debt;
+  }
+
   public void setClient(Client client) {
     this.client = client;
   }
-
-  public List<Payment> getPayments() {
-    return payments;
-  }
-
 }

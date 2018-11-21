@@ -16,11 +16,36 @@ import lombok.Data;
 @Entity
 @Data
 public class Client {
-    @Id
-    private UUID id;
-    private String name;
 
-    @OneToMany(mappedBy = "client")
-    @Cascade(CascadeType.ALL)
-    List<Debt> debts = new LinkedList<>();
+  @Id
+  private UUID id;
+  private String name;
+
+  @OneToMany(mappedBy = "client")
+  @Cascade(CascadeType.ALL)
+  private List<Debt> debts = new LinkedList<>();
+
+  @OneToMany(mappedBy = "client")
+  @Cascade(CascadeType.ALL)
+  private List<Debt> payments = new LinkedList<>();
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public List<Debt> getDebts() {
+    return debts;
+  }
 }
